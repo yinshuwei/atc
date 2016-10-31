@@ -179,8 +179,19 @@ func renderHTML(w http.ResponseWriter, r *http.Request) {
 }
 
 func serveContentWithTmpl(w http.ResponseWriter, r *http.Request, name string, modtime time.Time, content io.ReadSeeker) {
-	err := htmlRender.HTML(w, http.StatusOK, templateName(name), Map{
-		"envs": config.Envs,
+	err := r.ParseForm()
+	if err != nil {
+		log.Println(err)
+	}
+	params := map[string]string{}
+	for key, vals := range r.Form {
+		if len(vals) > 0 {
+			params[key] = vals[0]
+		}
+	}
+	err = htmlRender.HTML(w, http.StatusOK, templateName(name), Map{
+		"envs":   config.Envs,
+		"params": params,
 	})
 	if err != nil {
 		log.Println(err)

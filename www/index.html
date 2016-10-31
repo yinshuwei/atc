@@ -5,6 +5,9 @@
     <title>测试</title>
 </head>
 <body>
+
+Hello: {{.params.name}}
+
 {{$data := get `http://www.weather.com.cn/data/cityinfo/101010100.html` }} 
 
 <table>
