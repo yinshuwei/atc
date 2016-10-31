@@ -68,19 +68,6 @@ func (m AtcInts) Sub(key string, value int) Object {
 	return nil
 }
 
-// Val 真实值
-func (m AtcInts) Val(value Object) int {
-	if v, ok := value.(float64); ok {
-		return int(v)
-	}
-	return 0
-}
-
-// Arr 真实值
-func (m AtcInts) Arr(len int) []int {
-	return make([]int, len, len)
-}
-
 var (
 	configPath = ""
 	config     = &AtcConfig{}
@@ -108,6 +95,9 @@ func main() {
 		Funcs: []template.FuncMap{
 			template.FuncMap{"post": post},
 			template.FuncMap{"get": get},
+			template.FuncMap{"float2int": float2int},
+			template.FuncMap{"intArr": intArr},
+			template.FuncMap{"substr": substr},
 		},
 	})
 	http.HandleFunc("/", renderHTML)
@@ -309,4 +299,22 @@ func get(api string) (Map, error) {
 		return nil, err
 	}
 	return result, nil
+}
+
+func float2int(value Object) int {
+	if v, ok := value.(float64); ok {
+		return int(v)
+	}
+	return 0
+}
+
+func intArr(len int) []int {
+	return make([]int, len, len)
+}
+
+func substr(s string, start, end int) string {
+	if start >= 0 && start <= end && end <= len(s) {
+		return s[start:end]
+	}
+	return s
 }
