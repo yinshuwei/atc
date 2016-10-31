@@ -39,6 +39,48 @@ type AtcStatic struct {
 	IndexFile string
 }
 
+// AtcInts Atc int 的包装
+type AtcInts map[string]int
+
+// Get 获取内容
+func (m AtcInts) Get(key string) int {
+	if v, ok := m[key]; ok {
+		return v
+	}
+	return 0
+}
+
+// Set 设置内容
+func (m AtcInts) Set(key string, value int) Object {
+	m[key] = value
+	return nil
+}
+
+// Add 加法
+func (m AtcInts) Add(key string, value int) Object {
+	m.Set(key, m.Get(key)+value)
+	return nil
+}
+
+// Sub 减法
+func (m AtcInts) Sub(key string, value int) Object {
+	m.Set(key, m.Get(key)-value)
+	return nil
+}
+
+// Val 真实值
+func (m AtcInts) Val(value Object) int {
+	if v, ok := value.(float64); ok {
+		return int(v)
+	}
+	return 0
+}
+
+// Arr 真实值
+func (m AtcInts) Arr(len int) []int {
+	return make([]int, len, len)
+}
+
 var (
 	configPath = ""
 	config     = &AtcConfig{}
@@ -192,6 +234,7 @@ func serveContentWithTmpl(w http.ResponseWriter, r *http.Request, name string, m
 	err = htmlRender.HTML(w, http.StatusOK, templateName(name), Map{
 		"envs":   config.Envs,
 		"params": params,
+		"ints":   AtcInts{},
 	})
 	if err != nil {
 		log.Println(err)
