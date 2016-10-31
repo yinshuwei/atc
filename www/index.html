@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+</head>
+<body>
+{{$data := get `http://www.weather.com.cn/data/cityinfo/101010100.html` }} 
+
+<table>
+{{range $key, $val := $data.weatherinfo}}
+<tr><td>{{$key}} </td><td> {{$val}}</td></tr>
+{{end}}
+</table>
+
+</body>
+</html>

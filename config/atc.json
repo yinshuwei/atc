@@ -1,0 +1,8 @@
+{
+    "WebPath": "./www/",
+    "Port": ":8888",
+    "IsDev": false,
+    "Envs": {
+        "a": "b"
+    }
+}
