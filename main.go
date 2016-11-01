@@ -249,12 +249,12 @@ type Array []Object
 // Map Map
 type Map map[string]Object
 
-func post(api string, params string) (Map, error) {
+func post(api string, params string) Map {
 	p := map[string]string{}
 	err := json.Unmarshal([]byte(params), &p)
 	if err != nil {
 		log.Println(err)
-		return nil, err
+		return nil
 	}
 	postParam := url.Values{}
 	for key, value := range p {
@@ -263,42 +263,42 @@ func post(api string, params string) (Map, error) {
 	resp, err := http.PostForm(api, postParam)
 	if err != nil {
 		log.Println(err)
-		return nil, err
+		return nil
 	}
 	defer resp.Body.Close()
 	b, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Println(err)
-		return nil, err
+		return nil
 	}
 	result := Map{}
 	err = json.Unmarshal(b, &result)
 	if err != nil {
 		log.Println(err)
-		return nil, err
+		return nil
 	}
-	return result, nil
+	return result
 }
 
-func get(api string) (Map, error) {
+func get(api string) Map {
 	resp, err := http.Get(api)
 	if err != nil {
 		log.Println(err)
-		return nil, err
+		return nil
 	}
 	defer resp.Body.Close()
 	b, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Println(err)
-		return nil, err
+		return nil
 	}
 	result := Map{}
 	err = json.Unmarshal(b, &result)
 	if err != nil {
 		log.Println(err)
-		return nil, err
+		return nil
 	}
-	return result, nil
+	return result
 }
 
 func float2int(value Object) int {
