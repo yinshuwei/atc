@@ -1,0 +1,9 @@
+{
+    "WebPath": "www",
+    "Port": ":8888",
+    "IsDev": true,
+    "Page404": "/404.html",
+    "Envs": {
+        "a": "b"
+    }
+}
