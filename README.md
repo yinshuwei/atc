@@ -89,7 +89,7 @@ www中index.html
 
 .params.PARAM_NAME 用来获取页面URL上的参数
 .envs.ENV_NAME 用来获取atc.json中配置的变量
-.atc.GetAPI 通过GET方式获得API数据
+.atc.GetAPI 通过GET方式获得API数据(这里是一个快递接口的调用)
 后面是使用go template的语法使用数据
 
 ##函数
