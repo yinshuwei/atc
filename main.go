@@ -1,10 +1,6 @@
 package main
 
 import (
-	"atc/base"
-	"atc/funcs/atcs"
-	"atc/funcs/ints"
-	"atc/funcs/strs"
 	"fmt"
 	"log"
 	"net/http"
@@ -13,6 +9,10 @@ import (
 	"path/filepath"
 	"strings"
 
+	"./base"
+	"./funcs/atcs"
+	"./funcs/ints"
+	"./funcs/strs"
 	"git.oschina.net/yinshuwei/render"
 )
 
