@@ -9,10 +9,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	"./base"
-	"./funcs/atcs"
-	"./funcs/ints"
-	"./funcs/strs"
+	"git.oschina.net/yinshuwei/atc/base"
+	"git.oschina.net/yinshuwei/atc/funcs/atcs"
+	"git.oschina.net/yinshuwei/atc/funcs/ints"
+	"git.oschina.net/yinshuwei/atc/funcs/strs"
 	"git.oschina.net/yinshuwei/render"
 )
 
