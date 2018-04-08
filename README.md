@@ -7,7 +7,7 @@
 
 项目代码在 https://git.oschina.net/yinshuwei/atc
 
-##下载与运行atc
+## 下载与运行atc
 	cd $GOPATH/src
     git clone https://git.oschina.net/yinshuwei/atc.git
     cd atc
@@ -34,7 +34,7 @@
 
 说明安装成功
 
-##config
+## config
     {
         "WebPath": "www",
         "Port": ":8888",
@@ -55,7 +55,7 @@ Page404 404页面
 
 Envs 环境变量，可以在页面模板中使用
 
-##模板
+## 模板
 所有的html文件都会被当做模板进行解析。
 
 www中index.html
@@ -95,7 +95,7 @@ www中index.html
 
 后面是使用go template的语法使用数据
 
-##函数
+## 函数
 .atc.PostAPI 通过POST方式，获得body内容，并通过json解码，生成一个map
 
     arg1 url
