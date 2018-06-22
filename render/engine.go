@@ -92,15 +92,24 @@ func (h HTML) Render(w io.Writer, binding interface{}) error {
 		out := bufPool.Get()
 		err := h.Templates.ExecuteTemplate(out, h.Name, binding)
 		if err != nil {
+			log.Println(err)
 			bufPool.Put(out)
 			return err
 		}
-		cache = out.Bytes()
-		bufPool.Put(out)
-
 		if needCache {
-			base.WritePageCache(h.Name, h.query, cache)
+			base.WritePageCache(h.Name, h.query, out.Bytes())
 		}
+
+		// 在写头部之前，可能要写一些cookies，或者其他的处理
+		if h.before != nil {
+			h.before()
+		}
+		if hw, ok := w.(http.ResponseWriter); ok {
+			h.Head.Write(hw)
+		}
+		out.WriteTo(w)
+
+		bufPool.Put(out)
 	} else {
 		if expired {
 			go func() {
@@ -108,21 +117,23 @@ func (h HTML) Render(w io.Writer, binding interface{}) error {
 				err := h.Templates.ExecuteTemplate(out, h.Name, binding)
 				if err != nil {
 					log.Println(err)
+					bufPool.Put(out)
+					return
 				}
 				base.WritePageCache(h.Name, h.query, out.Bytes())
 				bufPool.Put(out)
 			}()
 		}
-	}
 
-	// 在写头部之前，可能要写一些cookies，或者其他的处理
-	if h.before != nil {
-		h.before()
+		// 在写头部之前，可能要写一些cookies，或者其他的处理
+		if h.before != nil {
+			h.before()
+		}
+		if hw, ok := w.(http.ResponseWriter); ok {
+			h.Head.Write(hw)
+		}
+		w.Write(cache)
 	}
-	if hw, ok := w.(http.ResponseWriter); ok {
-		h.Head.Write(hw)
-	}
-	w.Write(cache)
 
 	return nil
 }

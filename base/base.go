@@ -184,8 +184,13 @@ func WritePageCache(name, query string, cache []byte) {
 	} else {
 		memoryCacheMutex.Lock()
 		defer memoryCacheMutex.Unlock()
+
+		// 内存缓存需要新区域，不可使用bufferPool中的内存
+		cacheNew := make([]byte, len(cache))
+		copy(cacheNew, cache)
+
 		memoryCache[redisKey] = &AtcPageCache{
-			Body:        cache,
+			Body:        cacheNew,
 			ExpiredTime: time.Now().Add(time.Duration(ttl) * time.Second),
 		}
 	}
