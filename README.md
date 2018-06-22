@@ -6,6 +6,7 @@
 项目目的就是包装一些常用函数，供模板使用。
 
 ##下载与运行atc
+
 	cd $GOPATH/src
     git clone https://github.com/yinshuwei/atc.git
     cd atc
