@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+</head>
+<body>
+
+<h3>params envs</h3>
+Hello: {{.params.name}}
+<br/>
+Hello: {{.envs.a}}
+
+<br/>
+<br/>
+<h3>sessions</h3>
+1 Get
+{{.sessions.Get `a`}}
+
+<br/>
+{{.sessions.Delete `a`}}
+2 Delete
+{{.sessions.Get `a`}}
+
+<br/>
+{{.sessions.Set `a` .params.a}}
+3 Set
+{{.sessions.Get `a`}}
+
+<br/>
+{{.sessions.Clear}}
+4 Clear
+{{.sessions.Get `a`}}
+
+<br/>
+{{.sessions.Set `a` .params.a}}
+5 Set
+{{.sessions.Get `a`}}
+
+<br/>
+<br/>
+<h3>atc</h3>
+{{$data := .atc.GetAPI `http://www.kuaidi100.com/query?type=yuantong&postid=560513101584` }} 
+<table>
+<tr><td>-------------</td><td>-------------</td></tr>
+{{range $data.data}}
+{{range $key, $val := .}}
+<tr><td>{{$key}}: </td><td> {{$val}}</td></tr>
+{{end}}
+<tr><td>-------------</td><td>-------------</td></tr>
+{{end}}
+</table>
+
+</body>
+</html>

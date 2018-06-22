@@ -1,0 +1,14 @@
+{
+    "WebPath": "www",
+    "Port": ":8888",
+    "IsDev": true,
+    "Page404": "/404.html",
+    "_RedisAddress":"localhost:6379",
+    "_RedisAuth":"",
+    "Caches": {
+        "index": 5
+    },
+    "Envs": {
+        "a": "b"
+    }
+}

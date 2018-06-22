@@ -5,11 +5,9 @@
 
 项目目的就是包装一些常用函数，供模板使用。
 
-项目代码在 https://git.oschina.net/yinshuwei/atc
-
-## 下载与运行atc
+##下载与运行atc
 	cd $GOPATH/src
-    git clone https://git.oschina.net/yinshuwei/atc.git
+    git clone https://github.com/yinshuwei/atc.git
     cd atc
     go build
     ./atc
@@ -34,7 +32,7 @@
 
 说明安装成功
 
-## config
+##config
     {
         "WebPath": "www",
         "Port": ":8888",
@@ -55,7 +53,7 @@ Page404 404页面
 
 Envs 环境变量，可以在页面模板中使用
 
-## 模板
+##模板
 所有的html文件都会被当做模板进行解析。
 
 www中index.html
@@ -88,14 +86,28 @@ www中index.html
     </html>
 
 .params.PARAM_NAME 用来获取页面URL上的参数
-
 .envs.ENV_NAME 用来获取atc.json中配置的变量
-
 .atc.GetAPI 通过GET方式获得API数据(这里是一个快递接口的调用)
-
 后面是使用go template的语法使用数据
 
-## 函数
+
+##sessions
+
+设置数据
+
+    {{.sessions.Set `a` .params.a}}
+
+读取数据
+
+    {{$a:=.sessions.Get `a`}}
+
+其他操作
+
+    Exist key  #是否存在
+    Delete key #删除
+    Clear      #清空所有
+
+##函数
 .atc.PostAPI 通过POST方式，获得body内容，并通过json解码，生成一个map
 
     arg1 url
